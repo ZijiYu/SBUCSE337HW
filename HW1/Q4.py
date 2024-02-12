@@ -16,12 +16,14 @@ class File(FS_Item):
         self.size = size
 
 def load_fs(ls_output):
+    from collections import defaultdict
     with open(ls_output, 'r') as f:
         lines = f.readlines()
 
     root = None
     current_path = []
-    folders = {}
+    folders = defaultdict(Folder)
+    flag = ""
 
     for line in lines:
         line = line.strip()
@@ -34,7 +36,7 @@ def load_fs(ls_output):
             if not root:  # First directory is the root
                 root = folder
             else:  # Add to parent folder
-                parent_path = ' '.join(dir_path.split('/')[:-1])
+                parent_path = '/'.join(dir_path.split('/')[:-1])
                 if parent_path in folders:
                     folders[parent_path].add_item(folder)
 

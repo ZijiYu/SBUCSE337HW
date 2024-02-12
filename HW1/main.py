@@ -14,6 +14,7 @@ def print_fs(item, level=0):
     elif isinstance(item, File):
         print(f"{indent}File: {item.name}, Size: {item.size} bytes")
 
+
 def main():
     print("----Q1: is_chaotic()----")
     print(is_chaotic("aabbcd"))
@@ -35,10 +36,13 @@ def main():
     print("----Q4: load_fs()----")
     print_fs(load_fs("lsoutput.txt"))
     print("----Q5: decode()----")
-    print("encode:", encode("secret"))
-    print("encode:", encode("i am here now"))
-    print("encode:", encode("this is a test"))
-    print("decode",decode("sidnkw"))
+    test1 = encode("i am here now")
+    test2 = encode("this is a test")
+    test3 = encode("secret")
+    print("decode",decode(test1))
+    print("decode", decode(test2))
+    print("decode", decode(test3))
+
 
 
 
