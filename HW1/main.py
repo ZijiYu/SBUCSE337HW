@@ -16,32 +16,35 @@ def print_fs(item, level=0):
 
 
 def main():
-    print("----Q1: is_chaotic()----")
-    print(is_chaotic("aabbcd"))
-    print(is_chaotic('aaaabbbccd'))
-    print(is_chaotic('abaacccdee'))
+    # print("----Q1: is_chaotic()----")
+    # print(is_chaotic("aabbcd"))
+    # print(is_chaotic('aaaabbbccd'))
+    # print(is_chaotic('abaacccdee'))
+    #
+    #
+    # print("----Q2: is_balanced()----")
+    # print(is_balanced("{[()]}"))
+    # print(is_balanced("{[(])}"))
+    # print(is_balanced("{{[[(())]]}}"))
 
 
-    print("----Q2: is_balanced()----")
-    print(is_balanced("{[()]}"))
-    print(is_balanced("{[(])}"))
-    print(is_balanced("{{[[(())]]}}"))
-
-
-    print("----Q3: is_balanced()----")
+    print("----Q3: winning_function()----")
     arr = [2,3,4,5,6,8]
-    print(winning_function(arr))
+    print(winning_function(arr,even,odd))
 
 
-    print("----Q4: load_fs()----")
-    print_fs(load_fs("lsoutput.txt"))
-    print("----Q5: decode()----")
-    test1 = encode("i am here now")
-    test2 = encode("this is a test")
-    test3 = encode("secret")
-    print("decode",decode(test1))
-    print("decode", decode(test2))
-    print("decode", decode(test3))
+    # print("----Q4: load_fs()----")
+    # print_fs(load_fs("lsoutput.txt"))
+    # print("----Q5: decode()----")
+    # test1 = encode("i am here now")
+    # test2 = encode("this is a test")
+    # test3 = encode("secret")
+    # print(test1)
+    # print(test2)
+    # print(test3)
+    # print("decode",decode(test1))
+    # print("decode", decode(test2))
+    # print("decode", decode(test3))
 
 
 
