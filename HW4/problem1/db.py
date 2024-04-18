@@ -8,6 +8,7 @@ from objects import Movie
 
 conn = None
 
+
 def connect():
     global conn
     if not conn:
@@ -18,21 +19,25 @@ def connect():
             print("Linux")
             HOME = os.environ["HOME"]
             DB_FILE = "movies.sqlite"
-        
+
         conn = sqlite3.connect(DB_FILE)
         conn.row_factory = sqlite3.Row
     return conn
+
 
 def close():
     if conn:
         conn.close()
 
+
 def make_category(row):
     return Category(row["categoryID"], row["categoryName"])
 
+
 def make_movie(row):
     return Movie(row["movieID"], row["name"], row["year"], row["minutes"],
-            make_category(row))
+                 make_category(row))
+
 
 def get_categories():
     query = '''SELECT categoryID, name as categoryName
@@ -46,6 +51,7 @@ def get_categories():
         categories.append(make_category(row))
     return categories
 
+
 def get_category(category_id):
     query = '''SELECT categoryID, name AS categoryName
                FROM Category WHERE categoryID = ?'''
@@ -56,6 +62,7 @@ def get_category(category_id):
             return make_category(row)
         else:
             return None
+
 
 def get_movies_by_category(category_id):
     query = '''SELECT movieID, Movie.name, year, minutes,
@@ -73,6 +80,7 @@ def get_movies_by_category(category_id):
         movies.append(make_movie(row))
     return movies
 
+
 def get_movies_by_year(year):
     query = '''SELECT movieID, Movie.name, year, minutes,
                       Movie.categoryID as categoryID,
@@ -89,6 +97,7 @@ def get_movies_by_year(year):
         movies.append(make_movie(row))
     return movies
 
+
 def add_movie(movie):
     sql = '''INSERT INTO Movie (categoryID, name, year, minutes) 
              VALUES (?, ?, ?, ?)'''
@@ -97,12 +106,15 @@ def add_movie(movie):
                         movie.minutes))
         conn.commit()
 
-def delete_movie(movie_id):
+
+def delete_movie(movie_id,name):
     sql = '''DELETE FROM Movie WHERE movieID = ?'''
     with closing(conn.cursor()) as c:
         c.execute(sql, (movie_id,))
-        test = conn.commit()
-        print("Test", test)
+        if c.rowcount == 0:
+            print("No such ID")
+        else:
+            print(name + " was deleted from database. \n")
 
 
 # Initialization:
@@ -116,14 +128,12 @@ def create_category_table(conn):
         c.execute(sql)
     conn.commit()
 
+
 def initialize_category_table(conn):
     categories = [
         (1, "Animation"),
-        (2, "Action"),
-        (3, "Drama"),
-        (4, "Comedy"),
-        (5, "Fantasy"),
-        (6, "Horror")
+        (2, "Comedy"),
+        (3, "History")
     ]
     sql = ''' INSERT INTO Category (categoryID, name)
                   VALUES(?, ?) '''
@@ -134,6 +144,8 @@ def initialize_category_table(conn):
         print("Category Successfully Initialized")
     except sqlite3.Error as e:
         print(f"{e}Category Initialized Error")
+
+
 def create_movie_table(conn):
     sql = '''CREATE TABLE IF NOT EXISTS Movie (
              movieID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -147,7 +159,20 @@ def create_movie_table(conn):
         c.execute(sql)
     conn.commit()
 
+
 def initialize_db(conn):
     create_category_table(conn)
     initialize_category_table(conn)
     create_movie_table(conn)
+
+
+# new add features
+def get_movie(movie_id):
+    sql = '''SELECT name FROM Movie WHERE movieID=?'''
+    with closing(conn.cursor()) as c:
+        c.execute(sql, (movie_id,))
+        result = c.fetchone()
+    if result is not None:
+        return result[0]
+    else:
+        return None

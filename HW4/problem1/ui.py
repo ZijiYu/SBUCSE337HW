@@ -51,9 +51,20 @@ def display_movies_by_year():
     movies = db.get_movies_by_year(year)
     display_movies(movies, str(year))
 
+def year_check(year):
+    if year<1895:
+        print("Tips: Movie was be invented since 1895")
+        year=int(input("Year: "))
+        return year_check(year)
+    elif year>2024:
+        print("Error: Invalid Year")
+        year = int(input("Year: "))
+        return year_check(year)
+    else:
+        return year
 def add_movie():
     name        = input("Name: ")
-    year        = int(input("Year: "))
+    year        = year_check(int(input("Year: ")))
     minutes     = int(input("Minutes: "))
     category_id = int(input("Category ID: "))
     
@@ -64,12 +75,17 @@ def add_movie():
         movie = Movie(name=name, year=year, minutes=minutes,
                       category=category)
         db.add_movie(movie)    
-        print(name + " was added to database.\n")
+        print(f"'{name}' was added to database.\n")
 
 def delete_movie():
     movie_id = int(input("Movie ID: "))
-    db.delete_movie(movie_id)
-    print("Movie ID " + str(movie_id) + " was deleted from database.\n")
+    # get name of the movie
+    name=db.get_movie(movie_id)
+    confirm = input(f"Are you sure you want to delete '{name}' ? (y/n):")
+    if confirm.lower() == 'y':
+        db.delete_movie(movie_id,name)
+        #print("Movie ID " + str(movie_id) + " was deleted from database.\n")
+
         
 def main():
     conn=db.connect()
