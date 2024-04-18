@@ -11,18 +11,19 @@ def display_title():
 def display_menu():
     print("COMMAND MENU")
     print("cat  - View movies by category")
+    print("min  - View movies by minutes")
     print("year - View movies by year")
     print("add  - Add a movie")
     print("del  - Delete a movie")
     print("exit - Exit program")
-    print()    
-
+    print("------")
 def display_categories():
+    print()
     print("CATEGORIES")
     categories = db.get_categories()    
     for category in categories:
         print(str(category.id) + ". " + category.name)
-    print()
+    print("------")
 
 def display_movies(movies, title_term):
     print("MOVIES - " + title_term)
@@ -36,6 +37,7 @@ def display_movies(movies, title_term):
     print()    
 
 def display_movies_by_category():
+    display_categories()
     category_id = int(input("Category ID: "))
     category = db.get_category(category_id)
     if category == None:
@@ -44,7 +46,11 @@ def display_movies_by_category():
         print()
         movies = db.get_movies_by_category(category_id)
         display_movies(movies, category.name.upper())
-    
+def display_movie_by_minutes():
+    minu = int(input("Maximum number of minutes: "))
+    print()
+    movies = db.get_movie_by_minutes(minu)
+    display_movies(movies,str(minu))
 def display_movies_by_year():
     year = int(input("Year: "))
     print()
@@ -66,6 +72,7 @@ def add_movie():
     name        = input("Name: ")
     year        = year_check(int(input("Year: ")))
     minutes     = int(input("Minutes: "))
+    display_categories()
     category_id = int(input("Category ID: "))
     
     category = db.get_category(category_id)
@@ -98,6 +105,8 @@ def main():
             display_movies_by_category()
         elif command == "year":
             display_movies_by_year()
+        elif command == "min":
+            display_movie_by_minutes()
         elif command == "add":
             add_movie()
         elif command == "del":

@@ -96,7 +96,21 @@ def get_movies_by_year(year):
     for row in results:
         movies.append(make_movie(row))
     return movies
+def get_movie_by_minutes(minutes):
+    query = '''SELECT movieID, Movie.name, year, minutes,
+                          Movie.categoryID as categoryID,
+                          Category.name as categoryName
+                   FROM Movie JOIN Category
+                          ON Movie.categoryID = Category.categoryID
+                   WHERE  minutes < ?'''
+    with closing(conn.cursor()) as c:
+        c.execute(query, (minutes,))
+        results = c.fetchall()
 
+    movies = []
+    for row in results:
+        movies.append(make_movie(row))
+    return movies
 
 def add_movie(movie):
     sql = '''INSERT INTO Movie (categoryID, name, year, minutes) 
