@@ -88,7 +88,7 @@ def delete_movie():
     movie_id = int(input("Movie ID: "))
     # get name of the movie
     name=db.get_movie(movie_id)
-    confirm = input(f"Are you sure you want to delete '{name}' ? (y/n):")
+    confirm = input(f"Delete '{name}' ? (y/n):")
     if confirm.lower() == 'y':
         db.delete_movie(movie_id,name)
         #print("Movie ID " + str(movie_id) + " was deleted from database.\n")
