@@ -2,7 +2,7 @@ def contain_virus(grid)
   return 0 if grid.empty?
   height = grid.size
   width = grid[0].size
-  answer = 0
+  answer = 0.0
 
   # 定义四个方向：上，右，下，左
   directions = [[-1, 0], [0, 1], [1, 0], [0, -1]]

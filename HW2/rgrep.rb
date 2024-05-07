@@ -13,7 +13,7 @@ def parse_options(args)
   }
 
   OptionParser.new do |opts|
-    opts.banner = "Usage: rgrep.rb [options] <filename> [pattern]"
+    opts.banner = "Usage:  rgrep.rb [options] <filename> [pattern]"
 
     opts.on("-w", "--word", "Search for the whole word") do
       if options[:pattern]

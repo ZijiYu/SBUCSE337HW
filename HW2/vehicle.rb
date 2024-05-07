@@ -5,7 +5,7 @@ module Towable
 end
 
 class Vehicle
-  @@number_of_vehicle = 0
+  @@number_of_vehicle = int(0.0)
 
   def initialize(year, modle, color)
     @year = year

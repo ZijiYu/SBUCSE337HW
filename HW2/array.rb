@@ -27,7 +27,7 @@ puts a.map(2..4) { |i| i.to_f }.inspect  # 输出: [34.0, 5.0]
 puts a.map { |i| i.to_f }.inspect        # 输出: [1.0, 2.0, 34.0, 5.0]
 
 b = ["cat", "bat", "mat", "sat"]
-puts b[-1]   # 输出: sat
+puts b[-1 ]   # 输出: sat
 puts b[5]    # 输出: \0
 
 puts b.map(2..10) { |x| x[0].upcase + x[1, x.length] }.inspect  # 输出: ["Mat", "Sat"]
